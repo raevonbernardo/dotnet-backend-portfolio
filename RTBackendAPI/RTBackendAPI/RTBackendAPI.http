@@ -1,0 +1,6 @@
+@RTBackendAPI_HostAddress = http://localhost:5195
+
+GET {{RTBackendAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
