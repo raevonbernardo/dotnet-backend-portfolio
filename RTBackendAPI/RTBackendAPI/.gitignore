@@ -250,8 +250,4 @@ ModelManifest.xml
 *.db-shm
 *.db-wal
 
-Properties/launchSettings.json
-appsettings.Development.json
-appsettings.json
-
 *.DS_Store
