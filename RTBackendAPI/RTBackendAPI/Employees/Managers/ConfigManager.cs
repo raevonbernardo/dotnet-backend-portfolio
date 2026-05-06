@@ -8,7 +8,7 @@ public sealed class ConfigManager : IConfigManager
     private readonly IConfiguration _config;
 
     // needed a way to register any user if nothing exists in the database yet...
-    private User? _defaultUser { get; set; }
+    private User? _defaultAdminUser { get; set; }
 
     public ConfigManager(IConfiguration config)
     {
@@ -46,13 +46,13 @@ public sealed class ConfigManager : IConfigManager
 
     public User DefaultAdminUser()
     {
-        if (this._defaultUser == null)
+        if (this._defaultAdminUser == null)
         {
             string username = this._config["DefaultAdminUser:Username"]!;
             string password = this._config["DefaultAdminUser:Password"]!;
             string hashedPassword = new PasswordHasher<string>().HashPassword(username, password);
         
-            this._defaultUser = new User
+            this._defaultAdminUser = new User
             {
                 Username = username,
                 HashedPassword = hashedPassword,
@@ -61,6 +61,6 @@ public sealed class ConfigManager : IConfigManager
             };
         }
         
-        return this._defaultUser;
+        return this._defaultAdminUser;
     }
 }
