@@ -5,8 +5,8 @@ namespace RTBackendAPI.Employees.Services;
 public interface IConfigManager
 {
     JwtSettings JwtSettings();
-    
-    bool TryGetApiKey(AccessType accessType, out string apiKey);
 
+    string ApiKey();
+    
     User DefaultAdminUser();
 }

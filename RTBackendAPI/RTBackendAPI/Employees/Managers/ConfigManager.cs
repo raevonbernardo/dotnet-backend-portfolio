@@ -25,23 +25,9 @@ public sealed class ConfigManager : IConfigManager
         );
     }
 
-    public bool TryGetApiKey(AccessType accessType, out string apiKey)
+    public string ApiKey()
     {
-        apiKey = string.Empty;
-        
-        switch (accessType)
-        {
-            case AccessType.Default:
-                apiKey = this._config["Api-Keys:Default"]!;
-                break;
-            case AccessType.Admin:
-                apiKey = this._config["Api-Keys:Admin"]!;
-                break;
-            default:
-                return false;
-        }
-
-        return !string.IsNullOrWhiteSpace(apiKey);
+        return this._config["Api-Key"]!;
     }
 
     public User DefaultAdminUser()

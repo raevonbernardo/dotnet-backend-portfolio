@@ -21,7 +21,7 @@ public sealed class AuthenticateUserCommand
 
 public sealed class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
 {
-    public AuthenticateUserCommandValidator()
+    public AuthenticateUserCommandValidator(IConfigManager configManager)
     {
         RuleFor(command => command.Username)
             .NotNull()
@@ -40,6 +40,7 @@ public sealed class AuthenticateUserCommandValidator : AbstractValidator<Authent
         RuleFor(command => command.ApiKey)
             .NotNull()
             .NotEmpty()
+            .Must(apiKey => string.Equals(apiKey, configManager.ApiKey()))
             .WithMessage("Invalid api key.");
     }
 }
@@ -50,16 +51,13 @@ public sealed class AuthenticateUserCommandHandler
 
     private readonly IAuthenticationManager _authManager;
 
-    private readonly IConfigManager _configManager;
-
     private readonly IPasswordHasher<string> _passwordHasher;
 
     public AuthenticateUserCommandHandler(IUserDatabaseService dbService, IAuthenticationManager authManager, 
-        IConfigManager configManager, IPasswordHasher<string> passwordHasher)
+        IPasswordHasher<string> passwordHasher)
     {
         this._dbService = dbService;
         this._authManager = authManager;
-        this._configManager = configManager;
         this._passwordHasher = passwordHasher;
     }
 
@@ -72,29 +70,9 @@ public sealed class AuthenticateUserCommandHandler
             return Results.Unauthorized();
         }
 
-        if (!IsApiKeyValid(command.ApiKey, user.AccessType))
-        {
-            return Results.BadRequest("Invalid api key.");
-        }
-
         string token = this._authManager.CreateAuthToken(user.Username, user.AccessType);
 
         return Results.Ok(token);
-    }
-
-    private bool IsApiKeyValid(string apiKey, AccessType accessType)
-    {
-        if (!this._configManager.TryGetApiKey(accessType, out string configApiKey))
-        {
-            return false;
-        }
-
-        if (!string.Equals(configApiKey, apiKey))
-        {
-            return false;
-        }
-
-        return true;
     }
 
     private async Task<User?> FindActiveUser(AuthenticateUserCommand command)
