@@ -9,6 +9,22 @@ public enum AccessType
     Admin = 1,
 }
 
+public static class AccessTypeExtensions
+{
+    public static string ToNonAllocString(this AccessType accessType)
+    {
+        switch (accessType)
+        {
+            case AccessType.Default:
+                return nameof(AccessType.Default);
+            case AccessType.Admin:
+                return nameof(AccessType.Admin);
+            default:
+                return accessType.ToString();
+        }
+    }
+}
+
 public sealed class User
 {
     [Key]
