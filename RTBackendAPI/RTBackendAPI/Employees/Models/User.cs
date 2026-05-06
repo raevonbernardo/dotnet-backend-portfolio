@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using RTBackendAPI.Employees.Constants;
 
 namespace RTBackendAPI.Employees.Models;
 
@@ -13,11 +14,13 @@ public sealed class User
     [Key]
     public int PrivateId { get; set; }
 
-    [MaxLength(20)]
+    [MaxLength(SharedConstants.MAX_USERNAME_LENGTH)]
     public required string Username { get; set; } = string.Empty;
 
-    [MaxLength(100)]
+    [MaxLength(SharedConstants.MAX_PASSWORD_HASHED_LENGTH)]
     public required string HashedPassword { get; set; } = string.Empty;
 
     public AccessType AccessType { get; set; } = AccessType.Default;
+    
+    public bool IsActivated { get; set; }
 }
