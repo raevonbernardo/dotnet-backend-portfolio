@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using RTBackendAPI.Employees.Constants;
+using RTBackendAPI.Employees.Extensions;
 using RTBackendAPI.Employees.Models;
 using RTBackendAPI.Employees.Services;
 
@@ -28,6 +29,7 @@ public sealed class AuthenticateUserCommandValidator : AbstractValidator<Authent
             .NotEmpty()
             .MinimumLength(SharedConstants.MIN_USERNAME_LENGTH)
             .MaximumLength(SharedConstants.MAX_USERNAME_LENGTH)
+            .IsAlphanumericOnly()
             .WithMessage("Invalid username.");
 
         RuleFor(command => command.Password)
@@ -35,12 +37,14 @@ public sealed class AuthenticateUserCommandValidator : AbstractValidator<Authent
             .NotEmpty()
             .MinimumLength(SharedConstants.MIN_PASSWORD_LENGTH)
             .MaximumLength(SharedConstants.MAX_PASSWORD_LENGTH)
+            .HasNoSpaces()
             .WithMessage("Invalid password.");
 
         RuleFor(command => command.ApiKey)
             .NotNull()
             .NotEmpty()
             .Must(apiKey => string.Equals(apiKey, configManager.ApiKey()))
+            .HasNoSpaces()
             .WithMessage("Invalid api key.");
     }
 }
