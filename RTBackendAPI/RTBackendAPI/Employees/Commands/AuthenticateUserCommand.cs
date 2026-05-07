@@ -55,14 +55,14 @@ public sealed class AuthenticateUserCommandHandler
 
     private readonly IAuthenticationManager _authManager;
 
-    private readonly IPasswordHasher<string> _passwordHasher;
+    private readonly IPasswordManager _passwordManager;
 
     public AuthenticateUserCommandHandler(IUserDatabaseService dbService, IAuthenticationManager authManager, 
-        IPasswordHasher<string> passwordHasher)
+        IPasswordManager passwordManager)
     {
         this._dbService = dbService;
         this._authManager = authManager;
-        this._passwordHasher = passwordHasher;
+        this._passwordManager = passwordManager;
     }
 
     public async Task<IResult> Handle(AuthenticateUserCommand command)
@@ -74,7 +74,7 @@ public sealed class AuthenticateUserCommandHandler
             return Results.Unauthorized();
         }
 
-        string token = this._authManager.CreateAuthToken(user.Username, user.AccessType);
+        string token = this._authManager.CreateAuthToken(user);
 
         return Results.Ok(token);
     }
@@ -88,20 +88,11 @@ public sealed class AuthenticateUserCommandHandler
             return null;
         }
 
-        var verifyPasswordResult = this._passwordHasher.VerifyHashedPassword(user.Username, 
-            user.HashedPassword, command.Password);
-
-        switch (verifyPasswordResult)
+        if (!this._passwordManager.IsPasswordValid(user.Username, user.HashedPassword, command.Password))
         {
-            case PasswordVerificationResult.SuccessRehashNeeded:
-                // fall-through,
-                // but can add some rehash logic in the future
-            case PasswordVerificationResult.Success:
-                return user;
-            case PasswordVerificationResult.Failed:
-                // fall-through
-            default:
-                return null;
+            return null;
         }
+
+        return user;
     }
 }

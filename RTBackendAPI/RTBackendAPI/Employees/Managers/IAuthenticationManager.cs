@@ -4,5 +4,5 @@ namespace RTBackendAPI.Employees.Services;
 
 public interface IAuthenticationManager
 {
-    string CreateAuthToken(string username, AccessType accessType);
+    string CreateAuthToken(User user);
 }

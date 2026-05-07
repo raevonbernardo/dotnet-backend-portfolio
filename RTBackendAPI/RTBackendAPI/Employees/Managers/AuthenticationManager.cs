@@ -19,12 +19,13 @@ public sealed class AuthenticationManager : IAuthenticationManager
         this._tokenHandler = tokenHandler;
     }
 
-    public string CreateAuthToken(string username, AccessType accessType)
+    public string CreateAuthToken(User user)
     {
         Claim[] claims =
         [
-            new Claim(JwtRegisteredClaimNames.PreferredUsername, username),
-            new Claim(ClaimTypes.Role, accessType.ToNonAllocString()),
+            new Claim(JwtRegisteredClaimNames.Sub, user.PublicId.ToString()),
+            new Claim(JwtRegisteredClaimNames.PreferredUsername, user.Username),
+            new Claim(ClaimTypes.Role, user.AccessType.ToNonAllocString()),
         ];
 
         var jwtSettings = this._configManager.JwtSettings();

@@ -13,7 +13,9 @@ public sealed class User
 {
     [Key]
     public int PrivateId { get; set; }
-
+    
+    public Guid PublicId { get; set; }
+    
     [MaxLength(SharedConstants.MAX_USERNAME_LENGTH)]
     public required string Username { get; set; } = string.Empty;
 
