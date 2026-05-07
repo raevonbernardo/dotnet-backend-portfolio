@@ -1,12 +1,21 @@
 using System.Text.Json.Serialization;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using RTBackendAPI.Employees.Constants;
 using RTBackendAPI.Employees.Extensions;
 using RTBackendAPI.Employees.Models;
 using RTBackendAPI.Employees.Services;
 
 namespace RTBackendAPI.Employees.Commands;
+
+public static class AuthenticateUserExtensions
+{
+    public static IServiceCollection RegisterAuthenticateUserDependencies(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IValidator<AuthenticateUserCommand>, AuthenticateUserCommandValidator>()
+            .AddScoped<AuthenticateUserCommandHandler>();
+    }
+}
 
 public sealed class AuthenticateUserCommand
 {
