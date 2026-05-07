@@ -47,6 +47,7 @@ public static class WebApplicationBuilderExtensions
     private static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         return services
-            .AddScoped<IUserDatabaseService, UserDatabaseService>();
+            .AddScoped<IUserDatabaseService, UserDatabaseService>()
+            .AddScoped<IEmployeeDatabaseService, EmployeeDatabaseService>();
     }
 }
