@@ -5,7 +5,7 @@ namespace RTBackendAPI.Employees.Endpoints;
 
 public static class AuthEndpoint
 {
-    public static void MapAuthEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapAuthEndpoint(this IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("/auth");
 
@@ -21,5 +21,7 @@ public static class AuthEndpoint
 
             return await handler.Handle(command);
         }).AllowAnonymous();
+
+        return builder;
     }
 }
