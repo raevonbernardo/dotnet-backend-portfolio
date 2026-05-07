@@ -27,6 +27,10 @@ public static class WebApplicationBuilderExtensions
             .AddDbContext<UserDbContext>(options =>
             {
                 options.UseSqlite("Data Source=user.db");
+            })
+            .AddDbContext<EmployeeDbContext>(options =>
+            {
+                options.UseSqlite("Data Source=employee.db");
             });
     }
 

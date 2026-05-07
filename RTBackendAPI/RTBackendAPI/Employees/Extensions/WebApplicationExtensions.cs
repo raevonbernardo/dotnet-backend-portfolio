@@ -9,8 +9,12 @@ public static class WebApplicationExtensions
     {
         using var scope = app.Services.CreateScope();
 
-        var dbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
+        var userDbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
 
-        dbContext.Database.Migrate();
+        userDbContext.Database.Migrate();
+
+        var employeeDbContext = scope.ServiceProvider.GetRequiredService<EmployeeDbContext>();
+
+        employeeDbContext.Database.Migrate();
     }
 }
