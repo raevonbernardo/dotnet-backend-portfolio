@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Models;
@@ -30,6 +32,8 @@ public static class WebApplicationBuilderExtensions
     private static IServiceCollection RegisterSingletons(this IServiceCollection services)
     {
         return services
+            .AddSingleton<IPasswordHasher<string>, PasswordHasher<string>>()
+            .AddSingleton<JwtSecurityTokenHandler>()
             .AddSingleton<IConfigManager, ConfigManager>()
             .AddSingleton<IPasswordManager, PasswordManager>()
             .AddSingleton<IAuthenticationManager, AuthenticationManager>();
