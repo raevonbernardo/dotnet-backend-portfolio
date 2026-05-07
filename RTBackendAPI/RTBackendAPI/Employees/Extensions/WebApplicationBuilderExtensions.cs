@@ -15,7 +15,8 @@ public static class WebApplicationBuilderExtensions
             .RegisterDatabases()
             .RegisterSingletons()
             .RegisterServices()
-            .RegisterAuthenticateUserDependencies();
+            .RegisterAuthenticateUserDependencies()
+            .RegisterCreateUserDependencies();
 
         return builder;
     }
