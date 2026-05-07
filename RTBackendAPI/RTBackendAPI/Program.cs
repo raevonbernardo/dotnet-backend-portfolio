@@ -25,4 +25,6 @@ app.UseHttpsRedirection();
 
 app.MapAuthEndpoint();
 
+app.AutoMigrateDatabases();
+
 app.Run();
