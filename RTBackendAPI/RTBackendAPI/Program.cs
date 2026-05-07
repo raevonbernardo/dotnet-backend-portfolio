@@ -1,3 +1,4 @@
+using RTBackendAPI.Employees.Endpoints;
 using RTBackendAPI.Employees.Extensions;
 using Scalar.AspNetCore;
 
@@ -21,5 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapAuthEndpoint();
 
 app.Run();
