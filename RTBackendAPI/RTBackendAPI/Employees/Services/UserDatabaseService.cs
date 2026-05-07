@@ -19,15 +19,18 @@ public sealed class UserDatabaseService : IUserDatabaseService
         this._passwordManager = passwordManager;
     }
 
+    public async Task<bool> HasAnyUser()
+    {
+        return await this._dbContext.Users.AnyAsync();
+    }
+
+    public User DefaultAdminUser()
+    {
+        return this._configManager.DefaultAdminUser();
+    }
+
     public async Task<User?> FindUserByUsernameAsync(string username)
     {
-        bool hasAny = await this._dbContext.Users.AnyAsync();
-
-        if (!hasAny)
-        {
-            return this._configManager.DefaultAdminUser();
-        }
-
         return await this._dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
     }
 
