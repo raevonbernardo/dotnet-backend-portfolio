@@ -34,6 +34,11 @@ public sealed class UserDatabaseService : IUserDatabaseService
         return await this._dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
     }
 
+    public async Task<User?> FindUserByPublicIdAsync(Guid publicId)
+    {
+        return await this._dbContext.Users.FirstOrDefaultAsync(user => user.PublicId == publicId);
+    }
+
     public async Task AddUser(string username, string password)
     {
         User user = new()
