@@ -33,7 +33,7 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
     public CreateUserCommandValidator(IConfigManager configManager)
     {
         RuleFor(command => command.Username)
-            .Must(username => !string.IsNullOrWhiteSpace(username))
+            .NotNullOrEmpty()
             .WithMessage("{PropertName} cannot be empty.")
             .MinimumLength(SharedConstants.MIN_USERNAME_LENGTH)
             .WithMessage($"{{PropertName}} should contain at least {SharedConstants.MIN_USERNAME_LENGTH} characters.")

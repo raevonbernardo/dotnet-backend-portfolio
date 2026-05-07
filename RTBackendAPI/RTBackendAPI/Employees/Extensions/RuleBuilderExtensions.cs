@@ -4,6 +4,11 @@ namespace RTBackendAPI.Employees.Extensions;
 
 public static class RuleBuilderExtensions
 {
+    public static IRuleBuilderOptions<T, string> NotNullOrEmpty<T>(this IRuleBuilder<T, string> builder)
+    {
+        return builder.Must(value => !string.IsNullOrWhiteSpace(value));
+    }
+    
     public static IRuleBuilderOptions<T, string> IsAlphanumericOnly<T>(this IRuleBuilder<T, string> builder)
     {
         return builder.Matches(@"^[a-zA-Z0-9_]*$");
