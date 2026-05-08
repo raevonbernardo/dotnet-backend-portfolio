@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using RTBackendAPI.Employees.Models;
 
 namespace RTBackendAPI.Employees.Services;
@@ -39,10 +38,12 @@ public sealed class ConfigManager : IConfigManager
         {
             string username = this._config["DefaultAdminUser:Username"]!;
             string password = this._config["DefaultAdminUser:Password"]!;
+            Guid publicId = new(this._config["DefaultAdminUser:PublicId"]!);
             string hashedPassword = this._passwordManager.HashPassword(username, password);
         
             this._defaultAdminUser = new User
             {
+                PublicId = publicId,
                 Username = username,
                 HashedPassword = hashedPassword,
                 AccessType = AccessType.Admin,
