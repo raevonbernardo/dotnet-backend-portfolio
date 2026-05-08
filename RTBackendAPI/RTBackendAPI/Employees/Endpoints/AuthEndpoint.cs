@@ -44,6 +44,21 @@ public static class AuthEndpoint
                 return await handler.Handle(id, command);
             }).RequireAdminRoleAuthorization();
 
+        group.MapDelete("unregister/{id:guid}",
+            async (Guid id, IValidator<DeleteUserCommand> validator, DeleteUserCommandHandler handler) =>
+            {
+                DeleteUserCommand command = new() { UserId = id };
+                
+                var validationResult = await validator.ValidateAsync(command);
+
+                if (!validationResult.IsValid)
+                {
+                    return Results.ValidationProblem(validationResult.ToDictionary());
+                }
+
+                return await handler.Handle(command);
+            }).RequireAdminRoleAuthorization();
+
         return builder;
     }
 }
