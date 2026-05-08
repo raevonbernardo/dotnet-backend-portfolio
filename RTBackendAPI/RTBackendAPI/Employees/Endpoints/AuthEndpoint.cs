@@ -1,5 +1,6 @@
 using FluentValidation;
 using RTBackendAPI.Employees.Commands;
+using RTBackendAPI.Employees.Extensions;
 
 namespace RTBackendAPI.Employees.Endpoints;
 
@@ -23,12 +24,11 @@ public static class AuthEndpoint
             return await handler.Handle(command);
         }).AllowAnonymous();
 
-        group.MapPut("/access/{id}",
+        group.MapPut("/access/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
                 return await handler.Handle(id, command);
-            })
-            .RequireAuthorization();
+            }).RequireAdminRoleAuthorization();
 
         return builder;
     }
