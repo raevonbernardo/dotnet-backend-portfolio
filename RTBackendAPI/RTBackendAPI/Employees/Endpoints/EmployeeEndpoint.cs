@@ -24,7 +24,7 @@ public static class EmployeeEndpoint
                 }
 
                 return await handler.Handle(query);
-            })
+            }).RequireAuthorization()
             .WithName(SharedConstants.ENDPOINTS_GET_EMPLOYEE_BY_ID);
 
         return builder;
