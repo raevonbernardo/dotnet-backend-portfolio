@@ -2,7 +2,10 @@
 For Resume Purposes.
 
 **Implementation Summary**
-- Authorization and Authentication using JWT Bearer.
+- Uses EntityFramework Core + Minimal API design.
+- Uses FluentValidation for validating requests.
+- Uses PasswordHasher for hashing password stored in databases.
+- Uses JWT Bearer for authentication and authorization.
 - Separates User accounts for determining api access from the actual Employee accounts.
 - CRUD implementation for both User and Employee endpoints.
 - Automatically opens browser to show Swagger UI for API documentation.
@@ -18,5 +21,5 @@ For Resume Purposes.
 **Rider IDE**
 - JetBrains Rider 2025.3.3
 
-**Preview**
+**Swagger UI Preview**
 <img width="1470" height="835" alt="Screenshot 2026-05-08 at 2 02 47 PM" src="https://github.com/user-attachments/assets/9c32cb35-1ab5-4e51-a650-bc77bb4add44" />
