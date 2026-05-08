@@ -39,6 +39,8 @@ public sealed class UpdateUserAccessCommandHandler
 
         user.AccessType = command.AccessType;
 
+        await this._dbService.SaveChangesAsync();
+
         return Results.NoContent();
     }
 }
