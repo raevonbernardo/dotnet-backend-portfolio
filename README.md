@@ -14,3 +14,9 @@ For Resume Purposes.
 - Username - admin1234
 - Password - password1234
 - PublicId - 05d3cd05-0d86-4647-b951-7393570f222e
+
+**Rider IDE**
+- JetBrains Rider 2025.3.3
+
+**Preview**
+<img width="1470" height="835" alt="Screenshot 2026-05-08 at 2 02 47 PM" src="https://github.com/user-attachments/assets/9c32cb35-1ab5-4e51-a650-bc77bb4add44" />
