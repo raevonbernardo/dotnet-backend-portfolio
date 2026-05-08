@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FluentValidation;
 using RTBackendAPI.Employees.Constants;
 using RTBackendAPI.Employees.Extensions;
@@ -18,12 +19,16 @@ public static class CreateEmployeeExtensions
 
 public sealed class CreateEmployeeCommand
 {
+    [JsonPropertyName("first-name")]
     public string FirstName { get; set; } = string.Empty;
 
+    [JsonPropertyName("last-name")]
     public string LastName { get; set; } = string.Empty;
 
+    [JsonPropertyName("email")]
     public string Email { get; set; } = string.Empty;
 
+    [JsonPropertyName("job")]
     public string Job { get; set; } = string.Empty;
 }
 
