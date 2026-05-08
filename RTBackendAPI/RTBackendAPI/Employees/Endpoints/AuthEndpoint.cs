@@ -38,7 +38,7 @@ public static class AuthEndpoint
                 return await handler.Handle(command);
             }).RequireAdminRoleAuthorization();
 
-        group.MapPatch("/{id:guid}",
+        group.MapPatch("update/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
                 return await handler.Handle(id, command);
