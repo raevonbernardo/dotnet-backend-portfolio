@@ -22,9 +22,6 @@ public sealed class CreateUserCommand
 
     [JsonPropertyName("password")] 
     public string Password { get; set; } = string.Empty;
-
-    [JsonPropertyName("api-key")] 
-    public string ApiKey { get; set; } = string.Empty;
 }
 
 public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
@@ -36,9 +33,6 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
 
         RuleFor(command => command.Password)
             .ValidatePassword();
-
-        RuleFor(command => command.ApiKey)
-            .ValidateApiKey(configManager);
     }
 }
 

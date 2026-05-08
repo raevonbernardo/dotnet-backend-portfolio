@@ -20,15 +20,6 @@ public static class RuleBuilderExtensions
     {
         return builder.Must(value => !value.Contains(' '));
     }
-    
-    public static IRuleBuilderOptions<T, string> ValidateCurrentUsername<T>(this IRuleBuilder<T, string> builder)
-    {
-        return builder
-            .NotNullOrEmpty()
-            .MaximumLength(SharedConstants.MAX_USERNAME_LENGTH)
-            .IsAlphanumericOnly()
-            .WithMessage("Invalid {PropertyName}.");
-    }
 
     public static IRuleBuilderOptions<T, string> ValidateUsername<T>(this IRuleBuilder<T, string> builder)
     {

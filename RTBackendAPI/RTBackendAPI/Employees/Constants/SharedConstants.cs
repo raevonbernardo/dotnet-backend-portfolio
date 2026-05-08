@@ -3,6 +3,7 @@ namespace RTBackendAPI.Employees.Constants;
 public static class SharedConstants
 {
     public const string ENDPOINTS_GET_EMPLOYEE_BY_ID = "GetEmployeeById";
+    public const string API_HEADER_NAME = "X-Api-Key";
     
     public const int MIN_USERNAME_LENGTH = 4;
     public const int MAX_USERNAME_LENGTH = 255;

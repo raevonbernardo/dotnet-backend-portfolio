@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Constants;
 using RTBackendAPI.Employees.Extensions;
+using RTBackendAPI.Employees.Filters;
 using RTBackendAPI.Employees.Queries;
 
 namespace RTBackendAPI.Employees.Endpoints;
@@ -26,7 +27,9 @@ public static class EmployeeEndpoint
                 }
 
                 return await handler.Handle(query);
-            }).RequireAuthorization()
+            })
+            .RequireApiKey()
+            .RequireAuthorization()
             .WithName(SharedConstants.ENDPOINTS_GET_EMPLOYEE_BY_ID);
 
         group.MapPost("/register",
@@ -41,7 +44,9 @@ public static class EmployeeEndpoint
                 }
 
                 return await handler.Handle(command);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         group.MapPatch("/update/{id}",
             async (string id, [FromBody] UpdateEmployeeCommand command, [FromServices] IValidator<UpdateEmployeeCommand> validator,
@@ -55,13 +60,17 @@ public static class EmployeeEndpoint
                 }
 
                 return await handler.Handle(id, command);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         group.MapDelete("/unregister/{id}",
             async (string id, [FromServices] DeleteEmployeeCommandHandler handler) =>
             {
                 return handler.Handle(id);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         return builder;
     }

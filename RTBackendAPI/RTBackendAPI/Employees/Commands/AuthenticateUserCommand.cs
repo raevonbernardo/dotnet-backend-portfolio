@@ -24,9 +24,6 @@ public sealed class AuthenticateUserCommand
 
     [JsonPropertyName("password")] 
     public string Password { get; set; } = string.Empty;
-
-    [JsonPropertyName("api-key")]
-    public string ApiKey { get; set; } = string.Empty;
 }
 
 public sealed class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
@@ -48,13 +45,6 @@ public sealed class AuthenticateUserCommandValidator : AbstractValidator<Authent
             .MaximumLength(SharedConstants.MAX_PASSWORD_LENGTH)
             .HasNoSpaces()
             .WithMessage("Invalid password.");
-
-        RuleFor(command => command.ApiKey)
-            .NotNull()
-            .NotEmpty()
-            .Must(apiKey => string.Equals(apiKey, configManager.ApiKey()))
-            .HasNoSpaces()
-            .WithMessage("Invalid api key.");
     }
 }
 

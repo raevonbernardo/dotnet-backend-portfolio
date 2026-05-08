@@ -1,6 +1,8 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Extensions;
+using RTBackendAPI.Employees.Filters;
 
 namespace RTBackendAPI.Employees.Endpoints;
 
@@ -22,7 +24,9 @@ public static class AuthEndpoint
             }
 
             return await handler.Handle(command);
-        }).AllowAnonymous();
+        })
+            .RequireApiKey()
+            .AllowAnonymous();
 
         group.MapPost("/register",
             async (CreateUserCommand command, IValidator<CreateUserCommand> validator,
@@ -36,16 +40,20 @@ public static class AuthEndpoint
                 }
 
                 return await handler.Handle(command);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         group.MapPatch("update/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
                 return await handler.Handle(id, command);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         group.MapDelete("unregister/{id:guid}",
-            async (Guid id, IValidator<DeleteUserCommand> validator, DeleteUserCommandHandler handler) =>
+            async (Guid id, [FromServices] IValidator<DeleteUserCommand> validator, [FromServices] DeleteUserCommandHandler handler) =>
             {
                 DeleteUserCommand command = new() { UserId = id };
                 
@@ -57,7 +65,9 @@ public static class AuthEndpoint
                 }
 
                 return await handler.Handle(command);
-            }).RequireAdminRoleAuthorization();
+            })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         return builder;
     }
