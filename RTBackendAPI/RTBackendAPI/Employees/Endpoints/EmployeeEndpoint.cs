@@ -43,6 +43,20 @@ public static class EmployeeEndpoint
                 return await handler.Handle(command);
             }).RequireAdminRoleAuthorization();
 
+        group.MapPatch("/update/{id}",
+            async (string id, [FromBody] UpdateEmployeeCommand command, [FromServices] IValidator<UpdateEmployeeCommand> validator,
+                [FromServices] UpdateEmployeeCommandHandler handler) =>
+            {
+                var validationResult = await validator.ValidateAsync(command);
+
+                if (!validationResult.IsValid)
+                {
+                    return Results.ValidationProblem(validationResult.ToDictionary());
+                }
+
+                return await handler.Handle(id, command);
+            }).RequireAdminRoleAuthorization();
+
         return builder;
     }
 }
