@@ -1,6 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Models;
 using RTBackendAPI.Employees.Services;
@@ -15,8 +18,10 @@ public static class WebApplicationBuilderExtensions
             .RegisterDatabases()
             .RegisterSingletons()
             .RegisterServices()
+            .RegisterJwtAuthentication()
             .RegisterAuthenticateUserDependencies()
-            .RegisterCreateUserDependencies();
+            .RegisterCreateUserDependencies()
+            .RegisterUpdateUserAccessDependencies();
 
         return builder;
     }
@@ -32,6 +37,38 @@ public static class WebApplicationBuilderExtensions
             {
                 options.UseSqlite("Data Source=employee.db");
             });
+    }
+    
+    private static IServiceCollection RegisterJwtAuthentication(this IServiceCollection services)
+    {
+        using var serviceProvider = services.BuildServiceProvider();
+
+        var configManager = serviceProvider.GetRequiredService<IConfigManager>();
+        JwtSettings jwtSettings = configManager.JwtSettings();
+        
+        services.AddAuthorization()
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Token)),
+                    RequireExpirationTime = true,
+                };
+            });
+
+        return services;
     }
 
     private static IServiceCollection RegisterSingletons(this IServiceCollection services)
