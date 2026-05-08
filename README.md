@@ -6,6 +6,7 @@ For Resume Purposes.
 - Uses FluentValidation for validating requests.
 - Uses PasswordHasher for hashing password stored in databases.
 - Uses JWT Bearer for authentication and authorization.
+- Uses Sqlite for databases.
 - Separates User accounts for determining api access from the actual Employee accounts.
 - CRUD implementation for both User and Employee endpoints.
 - Automatically opens browser to show Swagger UI for API documentation.
