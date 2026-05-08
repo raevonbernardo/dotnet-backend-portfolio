@@ -1,6 +1,10 @@
+using FluentValidation;
 using RTBackendAPI.Employees.Endpoints;
 using RTBackendAPI.Employees.Extensions;
 using Scalar.AspNetCore;
+
+ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
+ValidatorOptions.Global.DefaultClassLevelCascadeMode = CascadeMode.Stop;
 
 var builder = WebApplication.CreateBuilder(args);
 
