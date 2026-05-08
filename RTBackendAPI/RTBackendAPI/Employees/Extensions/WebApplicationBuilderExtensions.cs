@@ -26,7 +26,8 @@ public static class WebApplicationBuilderExtensions
             .RegisterGetEmployeeByIdDependencies()
             .RegisterCreateEmployeeDependencies()
             .RegisterDeleteUserDependencies()
-            .RegisterUpdateEmployeeDependencies();
+            .RegisterUpdateEmployeeDependencies()
+            .RegisterDeleteEmployeeDependencies();
 
         return builder;
     }

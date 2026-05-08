@@ -57,6 +57,12 @@ public static class EmployeeEndpoint
                 return await handler.Handle(id, command);
             }).RequireAdminRoleAuthorization();
 
+        group.MapDelete("/unregister/{id}",
+            async (string id, [FromServices] DeleteEmployeeCommandHandler handler) =>
+            {
+                return handler.Handle(id);
+            }).RequireAdminRoleAuthorization();
+
         return builder;
     }
 }

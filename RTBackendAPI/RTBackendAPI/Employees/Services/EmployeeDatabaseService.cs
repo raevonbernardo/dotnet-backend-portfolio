@@ -34,6 +34,11 @@ public sealed class EmployeeDatabaseService : IEmployeeDatabaseService
 
         return employee;
     }
+    
+    public void RemoveEmployee(Employee employee)
+    {
+        this._dbContext.Employees.Remove(employee);
+    }
 
     public async Task SaveChangesAsync()
     {
