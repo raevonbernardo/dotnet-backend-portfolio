@@ -53,6 +53,11 @@ public sealed class CreateUserCommandHandler
 
     public async Task<IResult> Handle(CreateUserCommand command)
     {
+        if (IsDefaultAdmin(command.Username))
+        {
+            return Results.BadRequest("Username already taken.");
+        }
+        
         var user = await this._dbService.FindUserByUsernameAsync(command.Username);
 
         if (user != null)
@@ -65,5 +70,17 @@ public sealed class CreateUserCommandHandler
         await this._dbService.SaveChangesAsync();
 
         return Results.Created();
+    }
+
+    private bool IsDefaultAdmin(string username)
+    {
+        var defaultAdminUser = this._dbService.DefaultAdminUser();
+        
+        if (!string.Equals(username, defaultAdminUser.Username))
+        {
+            return false;
+        }
+
+        return true;
     }
 }
