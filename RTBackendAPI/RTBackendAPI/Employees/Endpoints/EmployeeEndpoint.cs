@@ -67,7 +67,7 @@ public static class EmployeeEndpoint
         group.MapDelete("/unregister/{id}",
             async (string id, [FromServices] DeleteEmployeeCommandHandler handler) =>
             {
-                return handler.Handle(id);
+                return await handler.Handle(id);
             })
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
