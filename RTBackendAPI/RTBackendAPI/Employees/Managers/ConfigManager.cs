@@ -7,12 +7,15 @@ public sealed class ConfigManager : IConfigManager
 {
     private readonly IConfiguration _config;
 
+    private readonly IPasswordManager _passwordManager;
+
     // needed a way to register any user if nothing exists in the database yet...
     private User? _defaultAdminUser { get; set; }
 
-    public ConfigManager(IConfiguration config)
+    public ConfigManager(IConfiguration config, IPasswordManager passwordManager)
     {
         this._config = config;
+        this._passwordManager = passwordManager;
     }
 
     public JwtSettings JwtSettings()
@@ -36,7 +39,7 @@ public sealed class ConfigManager : IConfigManager
         {
             string username = this._config["DefaultAdminUser:Username"]!;
             string password = this._config["DefaultAdminUser:Password"]!;
-            string hashedPassword = new PasswordHasher<string>().HashPassword(username, password);
+            string hashedPassword = this._passwordManager.HashPassword(username, password);
         
             this._defaultAdminUser = new User
             {
