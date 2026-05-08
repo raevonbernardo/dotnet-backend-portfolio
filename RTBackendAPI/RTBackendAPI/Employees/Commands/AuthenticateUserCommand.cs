@@ -82,17 +82,9 @@ public sealed class AuthenticateUserCommandHandler
     {
         var user = await this._dbService.FindUserByUsernameAsync(command.Username);
         
-        if (user == null) {
-            bool hasAnyAdminUser = await this._dbService.HasAnyUser(accessType: AccessType.Admin);
-
-            if (hasAnyAdminUser)
-            {
-                // user isn't registered yet
-                return null;
-            }
-            
-            // use default admin user if no admin user is registered in our database
-            user = this._dbService.DefaultAdminUser();
+        if (user == null)
+        {
+            return null;
         }
 
         if (!this._passwordManager.IsPasswordValid(user.Username, user.HashedPassword, command.Password))

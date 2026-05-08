@@ -4,8 +4,6 @@ namespace RTBackendAPI.Employees.Services;
 
 public interface IUserDatabaseService
 {
-    Task<bool> HasAnyUser(AccessType accessType);
-    
     User DefaultAdminUser();
     
     Task<User?> FindUserByUsernameAsync(string username);

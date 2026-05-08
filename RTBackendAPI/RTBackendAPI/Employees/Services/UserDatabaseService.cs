@@ -30,6 +30,13 @@ public sealed class UserDatabaseService : IUserDatabaseService
 
     public async Task<User?> FindUserByUsernameAsync(string username)
     {
+        string defaultAdminUsername = this._configManager.DefaultAdminUser().Username;
+        
+        if (string.Equals(defaultAdminUsername, username))
+        {
+            return this._configManager.DefaultAdminUser();
+        }
+        
         return await this._dbContext.Users.FirstOrDefaultAsync(user => user.Username == username);
     }
 
