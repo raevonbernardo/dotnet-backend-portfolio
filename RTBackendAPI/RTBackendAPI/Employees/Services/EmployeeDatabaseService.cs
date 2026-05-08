@@ -12,9 +12,31 @@ public sealed class EmployeeDatabaseService : IEmployeeDatabaseService
         this._dbContext = dbContext;
     }
 
-    public Task<Employee?> FindEmployeeById(string employeeId)
+    public Task<Employee?> FindEmployeeByIdAsync(string employeeId)
     {
         return this._dbContext.Employees.FirstOrDefaultAsync(employee =>
             string.Equals(employeeId, employee.EmployeeId));
+    }
+
+    public async Task<Employee> AddEmployeeAsync(AddEmployeeData data)
+    {
+        var employee = new Employee
+        {
+            EmployeeId = Guid.NewGuid().ToString(),
+            FirstName = data.FirstName,
+            LastName = data.LastName,
+            Email = data.Email,
+            Job = data.Job,
+            EmploymentDateTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+        };
+
+        await this._dbContext.Employees.AddAsync(employee);
+
+        return employee;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await this._dbContext.SaveChangesAsync();
     }
 }

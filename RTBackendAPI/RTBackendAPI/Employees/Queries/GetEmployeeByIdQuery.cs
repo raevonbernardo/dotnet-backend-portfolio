@@ -44,7 +44,7 @@ public sealed class GetEmployeeByIdQueryHandler
 
     public async Task<IResult> Handle(GetEmployeeByIdQuery query)
     {
-        var employee = await this._dbService.FindEmployeeById(query.EmployeeId);
+        var employee = await this._dbService.FindEmployeeByIdAsync(query.EmployeeId);
 
         if (employee == null)
         {

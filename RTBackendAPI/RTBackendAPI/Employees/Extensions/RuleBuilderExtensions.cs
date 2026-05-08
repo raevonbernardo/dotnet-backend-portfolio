@@ -64,4 +64,9 @@ public static class RuleBuilderExtensions
             .Must(apiKey => string.Equals(apiKey, configManager.ApiKey()))
             .WithMessage("Invalid api key.");
     }
+
+    public static IRuleBuilderOptions<T, string> ContainsLettersAndSpacesOnly<T>(this IRuleBuilder<T, string> builder)
+    {
+        return builder.Must(name => name.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)));
+    }
 }

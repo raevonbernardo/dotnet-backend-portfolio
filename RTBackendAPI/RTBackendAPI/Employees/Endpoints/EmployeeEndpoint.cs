@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using RTBackendAPI.Employees.Constants;
 using RTBackendAPI.Employees.Queries;
 
 namespace RTBackendAPI.Employees.Endpoints;
@@ -24,7 +25,7 @@ public static class EmployeeEndpoint
 
                 return await handler.Handle(query);
             })
-            .WithName("GetEmployeeById");
+            .WithName(SharedConstants.ENDPOINTS_GET_EMPLOYEE_BY_ID);
 
         return builder;
     }

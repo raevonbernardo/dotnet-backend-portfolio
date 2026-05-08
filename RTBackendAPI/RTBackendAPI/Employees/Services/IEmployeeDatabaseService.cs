@@ -4,5 +4,9 @@ namespace RTBackendAPI.Employees.Services;
 
 public interface IEmployeeDatabaseService
 {
-    Task<Employee?> FindEmployeeById(string employeeId);
+    Task<Employee?> FindEmployeeByIdAsync(string employeeId);
+
+    Task<Employee> AddEmployeeAsync(AddEmployeeData data);
+
+    Task SaveChangesAsync();
 }
