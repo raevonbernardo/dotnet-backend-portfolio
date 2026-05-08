@@ -19,23 +19,6 @@ public static class GetEmployeeByIdExtensions
 public sealed class GetEmployeeByIdQuery
 {
     public string EmployeeId { get; set; } = string.Empty;
-    
-    // ef core framework looks for this method... magic.
-    public static bool TryParse(string? value, out GetEmployeeByIdQuery? result)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            result = null;
-            return false;
-        }
-
-        result = new GetEmployeeByIdQuery
-        {
-            EmployeeId = value,
-        };
-        
-        return true;
-    }
 }
 
 public sealed class GetEmployeeByIdQueryValidator : AbstractValidator<GetEmployeeByIdQuery>

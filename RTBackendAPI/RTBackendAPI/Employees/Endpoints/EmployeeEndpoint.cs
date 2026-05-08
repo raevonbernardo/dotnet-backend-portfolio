@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RTBackendAPI.Employees.Queries;
 
 namespace RTBackendAPI.Employees.Endpoints;
@@ -9,9 +10,11 @@ public static class EmployeeEndpoint
     {
         var group = builder.MapGroup("/employees");
 
-        group.MapGet("/{query}", async (GetEmployeeByIdQuery query, IValidator<GetEmployeeByIdQuery> validator, 
-                GetEmployeeByIdQueryHandler handler) =>
+        group.MapGet("/{id}", async (string id, [FromServices] IValidator<GetEmployeeByIdQuery> validator, 
+                [FromServices] GetEmployeeByIdQueryHandler handler) =>
             {
+                var query = new GetEmployeeByIdQuery { EmployeeId = id };
+                
                 var validationResult = await validator.ValidateAsync(query);
 
                 if (!validationResult.IsValid)
