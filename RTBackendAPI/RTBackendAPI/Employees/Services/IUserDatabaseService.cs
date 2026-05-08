@@ -6,7 +6,7 @@ public interface IUserDatabaseService
 {
     Task<bool> HasAnyUser(AccessType accessType);
     
-    User? DefaultAdminUser();
+    User DefaultAdminUser();
     
     Task<User?> FindUserByUsernameAsync(string username);
 

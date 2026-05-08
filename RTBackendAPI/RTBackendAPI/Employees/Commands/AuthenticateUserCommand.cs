@@ -102,7 +102,7 @@ public sealed class AuthenticateUserCommandHandler
             }
             
             // use default admin user if no admin user is registered in our database
-            user = this._dbService.DefaultAdminUser()!;
+            user = this._dbService.DefaultAdminUser();
         }
 
         if (!this._passwordManager.IsPasswordValid(user.Username, user.HashedPassword, command.Password))
