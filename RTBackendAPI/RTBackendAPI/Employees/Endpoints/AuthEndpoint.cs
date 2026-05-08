@@ -24,7 +24,20 @@ public static class AuthEndpoint
             return await handler.Handle(command);
         }).AllowAnonymous();
 
-        group.MapPut("/access/{id:guid}",
+        group.MapPost("/register",
+            async (CreateUserCommand command, IValidator<CreateUserCommand> validator,
+                CreateUserCommandHandler handler) =>
+            {
+                var validationResult = await validator.ValidateAsync(command);
+
+                if (!validationResult.IsValid)
+                {
+                    return Results.ValidationProblem(validationResult.ToDictionary());
+                }
+
+                return await handler.Handle(command);
+            }).RequireAdminRoleAuthorization();
+
         group.MapPatch("/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
