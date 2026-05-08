@@ -43,7 +43,6 @@ public sealed class ConfigManager : IConfigManager
                 Username = username,
                 HashedPassword = hashedPassword,
                 AccessType = AccessType.Admin,
-                IsActivated = true,
             };
         }
         

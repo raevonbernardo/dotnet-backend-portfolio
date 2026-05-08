@@ -104,7 +104,7 @@ public sealed class AuthenticateUserCommandHandler
             user = this._dbService.DefaultAdminUser();
         }
 
-        if (user == null || !user.IsActivated)
+        if (user == null)
         {
             return null;
         }

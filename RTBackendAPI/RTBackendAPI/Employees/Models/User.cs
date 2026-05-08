@@ -23,6 +23,4 @@ public sealed class User
     public required string HashedPassword { get; set; } = string.Empty;
 
     public AccessType AccessType { get; set; } = AccessType.Default;
-    
-    public bool IsActivated { get; set; }
 }

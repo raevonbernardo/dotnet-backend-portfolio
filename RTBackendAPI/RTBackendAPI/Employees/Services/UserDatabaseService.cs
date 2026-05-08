@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RTBackendAPI.Employees.Models;
 
@@ -46,7 +45,6 @@ public sealed class UserDatabaseService : IUserDatabaseService
             Username = username,
             HashedPassword = this._passwordManager.HashPassword(username, password),
             AccessType = AccessType.Default,
-            IsActivated = true,
         };
 
         await this._dbContext.Users.AddAsync(user);
