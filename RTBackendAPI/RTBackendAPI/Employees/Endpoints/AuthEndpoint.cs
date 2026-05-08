@@ -9,7 +9,8 @@ public static class AuthEndpoint
     {
         var group = builder.MapGroup("/auth");
 
-        group.MapPost("/login", async (AuthenticateUserCommand command, AuthenticateUserCommandHandler handler, 
+        group.MapPost("/login", 
+            async (AuthenticateUserCommand command, AuthenticateUserCommandHandler handler, 
             IValidator<AuthenticateUserCommand> validator) =>
         {
             var validationResult = await validator.ValidateAsync(command);
@@ -21,6 +22,13 @@ public static class AuthEndpoint
 
             return await handler.Handle(command);
         }).AllowAnonymous();
+
+        group.MapPut("/access/{id}",
+            async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
+            {
+                return await handler.Handle(id, command);
+            })
+            .RequireAuthorization();
 
         return builder;
     }
