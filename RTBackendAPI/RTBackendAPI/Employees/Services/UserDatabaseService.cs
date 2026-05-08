@@ -50,6 +50,20 @@ public sealed class UserDatabaseService : IUserDatabaseService
 
         await this._dbContext.Users.AddAsync(user);
     }
+    
+    public async Task<bool> RemoveUser(Guid userId)
+    {
+        var user = await FindUserByPublicIdAsync(userId);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        this._dbContext.Remove(user);
+
+        return true;
+    }
 
     public async Task SaveChangesAsync()
     {

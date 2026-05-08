@@ -1,0 +1,51 @@
+using FluentValidation;
+using RTBackendAPI.Employees.Services;
+
+namespace RTBackendAPI.Employees.Commands;
+
+public static class DeleteUserExtensions
+{
+    public static IServiceCollection RegisterDeleteUserDependencies(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IValidator<DeleteUserCommand>, DeleteUserCommandValidator>()
+            .AddScoped<DeleteUserCommandHandler>();
+    }
+}
+
+public sealed class DeleteUserCommand
+{
+    public Guid UserId { get; set; }
+}
+
+public sealed class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
+{
+    public DeleteUserCommandValidator(IUserDatabaseService dbService)
+    {
+        RuleFor(command => command.UserId)
+            .Must(userId => userId != dbService.DefaultAdminUser().PublicId)
+            .WithMessage("Invalid user id.");
+    }
+}
+
+public sealed class DeleteUserCommandHandler
+{
+    private readonly IUserDatabaseService _dbService;
+
+    public DeleteUserCommandHandler(IUserDatabaseService dbService)
+    {
+        this._dbService = dbService;
+    }
+
+    public async Task<IResult> Handle(DeleteUserCommand command)
+    {
+        bool success = await this._dbService.RemoveUser(command.UserId);
+
+        if (!success)
+        {
+            return Results.NotFound("User not found.");
+        }
+
+        return Results.NoContent();
+    }
+}

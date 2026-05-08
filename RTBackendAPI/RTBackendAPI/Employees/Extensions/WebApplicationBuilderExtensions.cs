@@ -24,7 +24,8 @@ public static class WebApplicationBuilderExtensions
             .RegisterCreateUserDependencies()
             .RegisterUpdateUserAccessDependencies()
             .RegisterGetEmployeeByIdDependencies()
-            .RegisterCreateEmployeeDependencies();
+            .RegisterCreateEmployeeDependencies()
+            .RegisterDeleteUserDependencies();
 
         return builder;
     }

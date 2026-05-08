@@ -13,6 +13,8 @@ public interface IUserDatabaseService
     Task<User?> FindUserByPublicIdAsync(Guid publicId);
     
     Task AddUser(string username, string password);
+
+    Task<bool> RemoveUser(Guid userId);
     
     Task SaveChangesAsync();
 }
