@@ -4,7 +4,7 @@ namespace RTBackendAPI.Employees.Services;
 
 public interface IUserDatabaseService
 {
-    Task<bool> HasAnyUser();
+    Task<bool> HasAnyUser(AccessType accessType);
     
     User? DefaultAdminUser();
     

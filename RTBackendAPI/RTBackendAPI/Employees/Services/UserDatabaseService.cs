@@ -18,9 +18,9 @@ public sealed class UserDatabaseService : IUserDatabaseService
         this._passwordManager = passwordManager;
     }
 
-    public async Task<bool> HasAnyUser()
+    public async Task<bool> HasAnyUser(AccessType accessType)
     {
-        return await this._dbContext.Users.AnyAsync();
+        return await this._dbContext.Users.AnyAsync(user => user.AccessType == accessType);
     }
 
     public User DefaultAdminUser()

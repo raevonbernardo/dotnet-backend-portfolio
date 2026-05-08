@@ -92,15 +92,13 @@ public sealed class AuthenticateUserCommandHandler
     {
         User? user = null;
         
-        bool hasAnyUser = await this._dbService.HasAnyUser();
+        user = await this._dbService.FindUserByUsernameAsync(command.Username);
 
-        if (hasAnyUser)
+        bool hasAnyAdminUser = await this._dbService.HasAnyUser(accessType: AccessType.Admin);
+        
+        if (!hasAnyAdminUser)
         {
-            user = await this._dbService.FindUserByUsernameAsync(command.Username);
-        }
-        else
-        {
-            // use default admin user if no user is registered in our database
+            // use default admin user if no admin user is registered in our database
             user = this._dbService.DefaultAdminUser();
         }
 
