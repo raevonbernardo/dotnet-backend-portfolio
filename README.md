@@ -23,4 +23,4 @@ For Resume Purposes.
 - JetBrains Rider 2025.3.3
 
 **Swagger UI Preview**
-<img width="1470" height="835" alt="Screenshot 2026-05-08 at 2 02 47 PM" src="https://github.com/user-attachments/assets/9c32cb35-1ab5-4e51-a650-bc77bb4add44" />
+<img width="1470" height="835" alt="Screenshot 2026-05-08 at 6 06 37 PM" src="https://github.com/user-attachments/assets/11359155-1783-49e4-adf1-9d22f6aafd00" />
