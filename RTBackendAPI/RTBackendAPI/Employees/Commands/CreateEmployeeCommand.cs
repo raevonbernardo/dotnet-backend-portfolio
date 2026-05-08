@@ -13,7 +13,7 @@ public static class CreateEmployeeExtensions
     {
         return services
             .AddScoped<IValidator<CreateEmployeeCommand>, CreateEmployeeCommandValidator>()
-            .AddScoped<CreateEmployeeCommandHandle>();
+            .AddScoped<CreateEmployeeCommandHandler>();
     } 
 }
 
@@ -66,11 +66,11 @@ public sealed class CreateEmployeeCommandValidator : AbstractValidator<CreateEmp
     }
 }
 
-public sealed class CreateEmployeeCommandHandle
+public sealed class CreateEmployeeCommandHandler
 {
     private readonly IEmployeeDatabaseService _dbService;
 
-    public CreateEmployeeCommandHandle(IEmployeeDatabaseService dbService)
+    public CreateEmployeeCommandHandler(IEmployeeDatabaseService dbService)
     {
         this._dbService = dbService;
     }
