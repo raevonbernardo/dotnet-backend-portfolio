@@ -28,7 +28,6 @@ public sealed class GetEmployeeByIdQueryValidator : AbstractValidator<GetEmploye
         RuleFor(query => query.EmployeeId)
             .NotNullOrEmpty()
             .MaximumLength(SharedConstants.EMPLOYEE_MAX_ID_LENGTH)
-            .IsAlphanumericOnly()
             .WithMessage("Invalid Employee ID.");
     }
 }
