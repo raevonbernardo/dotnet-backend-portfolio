@@ -14,7 +14,7 @@ public interface IUserDatabaseService
     
     Task AddUser(string username, string password);
 
-    Task<bool> RemoveUser(Guid userId);
+    void RemoveUser(User user);
     
     Task SaveChangesAsync();
 }

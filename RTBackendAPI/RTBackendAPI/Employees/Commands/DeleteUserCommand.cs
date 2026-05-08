@@ -39,12 +39,16 @@ public sealed class DeleteUserCommandHandler
 
     public async Task<IResult> Handle(DeleteUserCommand command)
     {
-        bool success = await this._dbService.RemoveUser(command.UserId);
+        var user = await this._dbService.FindUserByPublicIdAsync(command.UserId);
 
-        if (!success)
+        if (user == null)
         {
             return Results.NotFound("User not found.");
         }
+
+        this._dbService.RemoveUser(user);
+
+        await this._dbService.SaveChangesAsync();
 
         return Results.NoContent();
     }
