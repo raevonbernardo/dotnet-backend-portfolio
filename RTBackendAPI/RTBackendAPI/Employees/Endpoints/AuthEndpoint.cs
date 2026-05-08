@@ -25,6 +25,7 @@ public static class AuthEndpoint
         }).AllowAnonymous();
 
         group.MapPut("/access/{id:guid}",
+        group.MapPatch("/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
                 return await handler.Handle(id, command);
