@@ -34,6 +34,6 @@ public sealed class ApiKeyValidationEndpointFilter : IEndpointFilter
             return Results.Unauthorized();
         }
         
-        return next(context);
+        return await next(context);
     }
 }
