@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Models;
+using RTBackendAPI.Employees.Queries;
 using RTBackendAPI.Employees.Services;
 
 namespace RTBackendAPI.Employees.Extensions;
@@ -21,7 +22,9 @@ public static class WebApplicationBuilderExtensions
             .RegisterJwtAuthentication()
             .RegisterAuthenticateUserDependencies()
             .RegisterCreateUserDependencies()
-            .RegisterUpdateUserAccessDependencies();
+            .RegisterUpdateUserAccessDependencies()
+            .RegisterGetEmployeeByIdDependencies()
+            .RegisterCreateEmployeeDependencies();
 
         return builder;
     }
