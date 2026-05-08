@@ -90,21 +90,19 @@ public sealed class AuthenticateUserCommandHandler
 
     private async Task<User?> FindActiveUser(AuthenticateUserCommand command)
     {
-        User? user = null;
+        var user = await this._dbService.FindUserByUsernameAsync(command.Username);
         
-        user = await this._dbService.FindUserByUsernameAsync(command.Username);
+        if (user == null) {
+            bool hasAnyAdminUser = await this._dbService.HasAnyUser(accessType: AccessType.Admin);
 
-        bool hasAnyAdminUser = await this._dbService.HasAnyUser(accessType: AccessType.Admin);
-        
-        if (!hasAnyAdminUser)
-        {
+            if (hasAnyAdminUser)
+            {
+                // user isn't registered yet
+                return null;
+            }
+            
             // use default admin user if no admin user is registered in our database
-            user = this._dbService.DefaultAdminUser();
-        }
-
-        if (user == null)
-        {
-            return null;
+            user = this._dbService.DefaultAdminUser()!;
         }
 
         if (!this._passwordManager.IsPasswordValid(user.Username, user.HashedPassword, command.Password))
