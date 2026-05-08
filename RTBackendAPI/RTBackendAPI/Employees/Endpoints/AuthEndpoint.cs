@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RTBackendAPI.Employees.Commands;
 using RTBackendAPI.Employees.Extensions;
 using RTBackendAPI.Employees.Filters;
+using RTBackendAPI.Employees.Queries;
 
 namespace RTBackendAPI.Employees.Endpoints;
 
@@ -27,6 +28,24 @@ public static class AuthEndpoint
         })
             .RequireApiKey()
             .AllowAnonymous();
+
+        group.MapGet("/find/{username}",
+            async (string username, [FromServices] IValidator<GetUserPublicIdQuery> validator,
+                [FromServices] GetUserPublicIdQueryHandler handler) =>
+            {
+                GetUserPublicIdQuery query = new() { Username = username };
+
+                var validationResults = await validator.ValidateAsync(query);
+
+                if (!validationResults.IsValid)
+                {
+                    return Results.ValidationProblem(validationResults.ToDictionary());
+                }
+
+                return await handler.Handle(query);
+            })
+                .RequireApiKey()
+                .RequireAuthorization();
 
         group.MapPost("/register",
             async (CreateUserCommand command, IValidator<CreateUserCommand> validator,

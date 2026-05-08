@@ -21,6 +21,7 @@ public static class WebApplicationBuilderExtensions
             .RegisterServices()
             .RegisterJwtAuthentication()
             .RegisterAuthenticateUserDependencies()
+            .RegisterGetUserPublicIdDependencies()
             .RegisterCreateUserDependencies()
             .RegisterUpdateUserAccessDependencies()
             .RegisterGetEmployeeByIdDependencies()
