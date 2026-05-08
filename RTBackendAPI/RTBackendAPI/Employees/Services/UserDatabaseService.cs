@@ -43,6 +43,7 @@ public sealed class UserDatabaseService : IUserDatabaseService
         User user = new()
         {
             Username = username,
+            PublicId = Guid.NewGuid(),
             HashedPassword = this._passwordManager.HashPassword(username, password),
             AccessType = AccessType.Default,
         };
