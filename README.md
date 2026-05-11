@@ -18,6 +18,9 @@ For Resume Purposes.
 - Password - password1234
 - PublicId - 05d3cd05-0d86-4647-b951-7393570f222e
 
+**.NET SDK Version**
+- 10.0
+
 **Rider IDE**
 - JetBrains Rider 2025.3.3
 
@@ -30,7 +33,7 @@ For Resume Purposes.
 
 
 **.NET CLI:**
-- If you don't have it installed, go to the project directory where the .csproj exists and run this in the terminal:
+- Go to the project directory where the .csproj exists and run this in the terminal:
 ```
 dotnet run . -c Development --launch-profile http
 ```
@@ -41,7 +44,7 @@ http://localhost:5195/scalar
 
 
 **Docker:**
-- I also added a Dockerfile just in case you want to run the server on a container. Just enter the followin in the terminal:
+- Go to the project directory where the Dockerfile is and run this in the terminal:
 ```
 // builds the docker image
 docker build -t rt-backend-api .
