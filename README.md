@@ -9,7 +9,6 @@ For Resume Purposes.
 - Uses Sqlite for databases.
 - Separates User accounts for determining api access from the actual Employee accounts.
 - CRUD implementation for both User and Employee endpoints.
-- Automatically opens browser to show Swagger UI for API documentation.
 
 **Development API Key**
 - eFKb3LEws0728alfJgGyznNhR7xMmajIRFBunLkPjZWKENykwrxveL5B9E0djatY
@@ -21,6 +20,42 @@ For Resume Purposes.
 
 **Rider IDE**
 - JetBrains Rider 2025.3.3
+
+# How To Run
+
+**Rider IDE:**
+- If you have the installed Rider IDE version or higher, you can just hit play on the upper-right. It should auto-open your browser to the Swagger url.
+
+<img width="391" height="51" alt="Screenshot 2026-05-11 at 6 02 18 PM" src="https://github.com/user-attachments/assets/93c59bfa-f6e8-4137-b18a-84ef23217b87" />
+
+
+**.NET CLI:**
+- If you don't have it installed, go to the project directory where the .csproj exists and run this in the terminal:
+```
+dotnet run . -c Development --launch-profile http
+```
+- Then go to your browser and enter this url:
+```
+http://localhost:5195/scalar
+```
+
+
+**Docker:**
+- I also added a Dockerfile just in case you want to run the server on a container. Just enter the followin in the terminal:
+```
+// builds the docker image
+docker build -t rt-backend-api .
+
+// deletes any running container with the name rt-backend-api
+docker rm -f rt-backend-api
+
+// runs the image on a container named "rt-backend-api"
+docker run --name "rt-backend-api" -p 8080:8080 rt-backend-api
+```
+- Then go to your browser and enter this url:
+```
+http://localhost:8080/scalar
+```
 
 **Swagger UI Preview**
 <img width="1470" height="835" alt="Screenshot 2026-05-08 at 6 06 37 PM" src="https://github.com/user-attachments/assets/11359155-1783-49e4-adf1-9d22f6aafd00" />
