@@ -12,7 +12,7 @@ public static class EmployeeEndpoint
 {
     public static IEndpointRouteBuilder MapEmployeeEndpoint(this IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("/employees");
+        var group = builder.MapGroup("/api/v1/employees");
 
         group.MapGet("/{id}", async (string id, [FromServices] IValidator<GetEmployeeByIdQuery> validator, 
                 [FromServices] GetEmployeeByIdQueryHandler handler) =>
@@ -32,7 +32,7 @@ public static class EmployeeEndpoint
             .RequireAuthorization()
             .WithName(SharedConstants.ENDPOINTS_GET_EMPLOYEE_BY_ID);
 
-        group.MapPost("/register",
+        group.MapPost("/",
             async (CreateEmployeeCommand command, IValidator<CreateEmployeeCommand> validator,
                 CreateEmployeeCommandHandler handler) =>
             {
@@ -48,7 +48,7 @@ public static class EmployeeEndpoint
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
-        group.MapPatch("/update/{id}",
+        group.MapPatch("/{id}",
             async (string id, [FromBody] UpdateEmployeeCommand command, [FromServices] IValidator<UpdateEmployeeCommand> validator,
                 [FromServices] UpdateEmployeeCommandHandler handler) =>
             {
@@ -64,7 +64,7 @@ public static class EmployeeEndpoint
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
-        group.MapDelete("/unregister/{id}",
+        group.MapDelete("/{id}",
             async (string id, [FromServices] DeleteEmployeeCommandHandler handler) =>
             {
                 return await handler.Handle(id);

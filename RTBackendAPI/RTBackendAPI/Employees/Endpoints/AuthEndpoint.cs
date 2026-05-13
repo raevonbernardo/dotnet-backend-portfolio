@@ -11,7 +11,7 @@ public static class AuthEndpoint
 {
     public static IEndpointRouteBuilder MapAuthEndpoint(this IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("/auth");
+        var group = builder.MapGroup("/api/v1/auth");
 
         group.MapPost("/login", 
             async (AuthenticateUserCommand command, AuthenticateUserCommandHandler handler, 
@@ -29,7 +29,7 @@ public static class AuthEndpoint
             .RequireApiKey()
             .AllowAnonymous();
 
-        group.MapGet("/find/{username}",
+        group.MapGet("/users/{username}",
             async (string username, [FromServices] IValidator<GetUserPublicIdQuery> validator,
                 [FromServices] GetUserPublicIdQueryHandler handler) =>
             {
@@ -47,7 +47,7 @@ public static class AuthEndpoint
                 .RequireApiKey()
                 .RequireAuthorization();
 
-        group.MapPost("/register",
+        group.MapPost("/users",
             async (CreateUserCommand command, IValidator<CreateUserCommand> validator,
                 CreateUserCommandHandler handler) =>
             {
@@ -63,7 +63,7 @@ public static class AuthEndpoint
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
-        group.MapPatch("update/{id:guid}",
+        group.MapPatch("/users/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
             {
                 return await handler.Handle(id, command);
@@ -71,7 +71,7 @@ public static class AuthEndpoint
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
-        group.MapDelete("unregister/{id:guid}",
+        group.MapDelete("/users/{id:guid}",
             async (Guid id, [FromServices] IValidator<DeleteUserCommand> validator, [FromServices] DeleteUserCommandHandler handler) =>
             {
                 DeleteUserCommand command = new() { UserId = id };
