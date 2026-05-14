@@ -2,11 +2,11 @@
 For Resume Purposes.
 
 **Implementation Summary**
-- Uses EntityFramework Core + Minimal API design.
-- Uses FluentValidation for validating requests.
-- Uses PasswordHasher for hashing password stored in databases.
-- Uses JWT Bearer for authentication and authorization.
-- Uses Sqlite for databases.
+- Uses **EntityFramework Core** + Minimal API design.
+- Uses **FluentValidation** for validating requests.
+- Uses **PasswordHasher** for hashing password stored in databases.
+- Uses **JWT Bearer** for authentication and authorization.
+- Uses **Sqlite** for databases.
 - Separates User accounts for determining api access from the actual Employee accounts.
 - CRUD implementation for both User and Employee endpoints.
 
@@ -61,4 +61,5 @@ http://localhost:8080/scalar
 ```
 
 **Swagger UI Preview**
-<img width="1470" height="835" alt="Screenshot 2026-05-08 at 6 06 37 PM" src="https://github.com/user-attachments/assets/11359155-1783-49e4-adf1-9d22f6aafd00" />
+<img width="1728" height="996" alt="Screenshot 2026-05-14 at 7 59 44 AM" src="https://github.com/user-attachments/assets/6bce6949-9350-41ae-a772-335043746e15" />
+
