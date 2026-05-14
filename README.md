@@ -61,5 +61,4 @@ http://localhost:8080/scalar
 ```
 
 **Swagger UI Preview**
-<img width="1728" height="996" alt="Screenshot 2026-05-14 at 7 59 44 AM" src="https://github.com/user-attachments/assets/6bce6949-9350-41ae-a772-335043746e15" />
-
+<img width="1727" height="996" alt="Screenshot 2026-05-14 at 8 13 36 AM" src="https://github.com/user-attachments/assets/81f8879d-4d1d-424a-822e-686b634287d3" />
