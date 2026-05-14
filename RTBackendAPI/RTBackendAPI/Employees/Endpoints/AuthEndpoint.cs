@@ -62,6 +62,14 @@ public static class AuthEndpoint
             })
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
+        
+        group.MapPut("/users/{id:guid}",
+                async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
+                {
+                    return await handler.Handle(id, command);
+                })
+            .RequireApiKey()
+            .RequireAdminRoleAuthorization();
 
         group.MapPatch("/users/{id:guid}",
             async (Guid id, UpdateUserAccessCommand command, UpdateUserAccessCommandHandler handler) =>
