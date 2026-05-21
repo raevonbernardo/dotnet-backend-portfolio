@@ -7,6 +7,7 @@ For Resume Purposes.
 - Uses **PasswordHasher** for hashing password stored in databases.
 - Uses **JWT Bearer** for authentication and authorization.
 - Uses **Sqlite** for databases.
+- Uses **Token Bucket** rate limiting algorithm.
 - Separates User accounts for determining api access from the actual Employee accounts.
 - CRUD implementation for both User and Employee endpoints.
 
