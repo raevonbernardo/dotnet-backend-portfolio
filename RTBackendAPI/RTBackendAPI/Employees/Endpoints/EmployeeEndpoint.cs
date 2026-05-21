@@ -28,6 +28,7 @@ public static class EmployeeEndpoint
 
                 return await handler.Handle(query);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAuthorization()
             .WithName(SharedConstants.ENDPOINTS_GET_EMPLOYEE_BY_ID);
@@ -45,6 +46,7 @@ public static class EmployeeEndpoint
 
                 return await handler.Handle(command);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
         
@@ -61,6 +63,7 @@ public static class EmployeeEndpoint
 
                     return await handler.Handle(id, command);
                 })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
@@ -77,6 +80,7 @@ public static class EmployeeEndpoint
 
                 return await handler.Handle(id, command);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
@@ -85,6 +89,7 @@ public static class EmployeeEndpoint
             {
                 return await handler.Handle(id);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 

@@ -26,12 +26,13 @@ public static class AuthEndpoint
 
             return await handler.Handle(command);
         })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .AllowAnonymous();
 
         group.MapGet("/users/{username}",
             async (string username, [FromServices] IValidator<GetUserPublicIdQuery> validator,
-                [FromServices] GetUserPublicIdQueryHandler handler) =>
+                [FromServices] GetUserPublicIdQueryHandler handler) => 
             {
                 GetUserPublicIdQuery query = new() { Username = username };
 
@@ -44,8 +45,9 @@ public static class AuthEndpoint
 
                 return await handler.Handle(query);
             })
-                .RequireApiKey()
-                .RequireAuthorization();
+            .RequireRateLimitingWithTokenPolicy()
+            .RequireApiKey()
+            .RequireAuthorization();
 
         group.MapPost("/users",
             async (CreateUserCommand command, IValidator<CreateUserCommand> validator,
@@ -60,6 +62,7 @@ public static class AuthEndpoint
 
                 return await handler.Handle(command);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
         
@@ -68,6 +71,7 @@ public static class AuthEndpoint
                 {
                     return await handler.Handle(id, command);
                 })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
@@ -76,6 +80,7 @@ public static class AuthEndpoint
             {
                 return await handler.Handle(id, command);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 
@@ -93,6 +98,7 @@ public static class AuthEndpoint
 
                 return await handler.Handle(command);
             })
+            .RequireRateLimitingWithTokenPolicy()
             .RequireApiKey()
             .RequireAdminRoleAuthorization();
 

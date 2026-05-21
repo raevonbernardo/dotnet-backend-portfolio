@@ -52,4 +52,14 @@ public sealed class ConfigManager : IConfigManager
         
         return this._defaultAdminUser;
     }
+
+    public TokenBucketRateLimiterSettings RateLimiterSettings()
+    {
+        return new TokenBucketRateLimiterSettings(
+            tokenLimit: int.Parse(this._config["RateLimiterSettings:TokenLimit"]!),
+            tokenPerPeriod: int.Parse(this._config["RateLimiterSettings:TokenPerPeriod"]!),
+            replenishmentPeriodInSeconds: int.Parse(this._config["RateLimiterSettings:ReplenishmentPeriodInSeconds"]!),
+            queueLimit: int.Parse(this._config["RateLimiterSettings:QueueLimit"]!),
+            autoReplenishment: bool.Parse(this._config["RateLimiterSettings:AutoReplenishment"]!));
+    }
 }

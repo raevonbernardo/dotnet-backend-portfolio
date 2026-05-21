@@ -2,6 +2,7 @@ namespace RTBackendAPI.Employees.Constants;
 
 public static class SharedConstants
 {
+    public const string RATE_LIMITER_POLICY_NAME = "token";
     public const string ENDPOINTS_GET_EMPLOYEE_BY_ID = "GetEmployeeById";
     public const string API_HEADER_NAME = "X-Api-Key";
     

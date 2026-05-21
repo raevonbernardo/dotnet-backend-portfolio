@@ -31,6 +31,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRateLimiter();
+
 app.MapAuthEndpoint();
 app.MapEmployeeEndpoint();
 

@@ -9,4 +9,6 @@ public interface IConfigManager
     string ApiKey();
     
     User DefaultAdminUser();
+    
+    TokenBucketRateLimiterSettings RateLimiterSettings();
 }

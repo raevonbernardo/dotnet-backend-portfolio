@@ -2,9 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RTBackendAPI.Employees.Commands;
+using RTBackendAPI.Employees.Constants;
 using RTBackendAPI.Employees.Models;
 using RTBackendAPI.Employees.Queries;
 using RTBackendAPI.Employees.Services;
@@ -28,7 +30,8 @@ public static class WebApplicationBuilderExtensions
             .RegisterCreateEmployeeDependencies()
             .RegisterDeleteUserDependencies()
             .RegisterUpdateEmployeeDependencies()
-            .RegisterDeleteEmployeeDependencies();
+            .RegisterDeleteEmployeeDependencies()
+            .RegisterRateLimiter();
 
         return builder;
     }
@@ -92,5 +95,29 @@ public static class WebApplicationBuilderExtensions
         return services
             .AddScoped<IUserDatabaseService, UserDatabaseService>()
             .AddScoped<IEmployeeDatabaseService, EmployeeDatabaseService>();
+    }
+
+    private static IServiceCollection RegisterRateLimiter(this IServiceCollection services)
+    {
+        using var serviceProvider = services.BuildServiceProvider();
+
+        var configManager = serviceProvider.GetRequiredService<IConfigManager>();
+        TokenBucketRateLimiterSettings settings = configManager.RateLimiterSettings();
+        
+        services.AddRateLimiter(options =>
+        {
+            options.AddTokenBucketLimiter(policyName: SharedConstants.RATE_LIMITER_POLICY_NAME, configureOptions =>
+            {
+                configureOptions.TokenLimit = settings.TokenLimit;
+                configureOptions.TokensPerPeriod = settings.TokenPerPeriod;
+                configureOptions.ReplenishmentPeriod = settings.ReplenishmentPeriod;
+                configureOptions.QueueLimit = settings.QueueLimit;
+                configureOptions.AutoReplenishment = settings.AutoReplenishment;
+            });
+
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
+
+        return services; 
     }
 }
